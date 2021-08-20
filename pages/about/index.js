@@ -2,11 +2,11 @@ import React from "react";
 
 import { View, Text } from "react-native";
 
-export default function Home() {
+export default function About() {
   return (
     <View>
       <Text>
-        Home
+        About
       </Text>
     </View>
   )

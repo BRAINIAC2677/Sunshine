@@ -1,22 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {color} from './styles/global';
+
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+
+import MainTabContainer from './navigation/mainTab'
+import { LocationProvider } from './contexts/locationContext.js';
+
+
 
 export default function App() {
-  return (
-    <View style={[color.primary, styles.container]}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  let [fontsLoaded] = useFonts({
+    'barlow-regular': require('./assets/fonts/Barlow-Regular.ttf'),
+    'barlow-bold': require('./assets/fonts/Barlow-Bold.ttf'),
+    'barlow-semibold': require('./assets/fonts/Barlow-SemiBold.ttf'),
+  });
+
+  if (fontsLoaded) {
+    return (
+      <LocationProvider>
+        <StatusBar animated={true} barStyle="dark-content" />
+        <MainTabContainer />
+      </LocationProvider>
+    )
+  } else {
+    return <AppLoading />
+  }
+}
