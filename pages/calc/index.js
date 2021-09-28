@@ -14,7 +14,8 @@ import { fonts } from "../../styles/global";
 export default function Calc({ navigation }) {
   const renderCard = (item) => (
     <TouchableOpacity
-      style={tw.style("shadow-md", {
+      onPress={() => navigation.navigate(item.screen)}
+      style={tw.style("shadow-md p-4", {
         backgroundColor: item.bgColor,
         ...styles.card,
       })}
@@ -25,7 +26,7 @@ export default function Calc({ navigation }) {
           ...styles.iconBg,
         }}
       >
-        {item.title !== "Humidity" ? (
+        {item.icon !== "water-outline" ? (
           <Feather name={item.icon} size={24} color="white" />
         ) : (
           <Ionicons name={item.icon} size={24} color="white" />
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     fontSize: 20,
     color: "white",
+    textAlign: "center",
   },
   buttonText: {
     marginLeft: 12,
@@ -110,10 +112,11 @@ const styles = StyleSheet.create({
 const data = [
   {
     id: 1,
-    title: "Solar Data",
+    title: "Solar Power",
     icon: "sun",
     bgColor: "#FF6968",
     secColor: "#FF8280",
+    screen: "Solar",
   },
   {
     id: 2,
@@ -121,19 +124,22 @@ const data = [
     icon: "thermometer",
     bgColor: "#7A54FF",
     secColor: "#946BFF",
+    screen: "Temperature",
   },
   {
     id: 3,
-    title: "Wind Data",
+    title: "Wind Flow",
     icon: "wind",
     bgColor: "#2AC3FF",
     secColor: "#39D4FD",
+    screen: "Wind",
   },
   {
     id: 4,
-    title: "Humidity Data",
+    title: "Humidity",
     icon: "water-outline",
     bgColor: "#FF8F61",
     secColor: "#FFA57A",
+    screen: "Humidity",
   },
 ];
