@@ -1,30 +1,117 @@
+import { EvilIcons } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import MapView from 'react-native-maps';
-import { colors } from "../../styles/global";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import MapView, { Callout, Circle, Marker } from "react-native-maps";
+import homeMarker from "../../assets/homeMarker.png";
+import { useLocation } from "../../contexts/locationContext";
 
-export default function Map({navigation}) {
+export default function Map({ navigation }) {
+  const { location, setChartLocation } = useLocation();
+
+  const [pin, setPin] = React.useState({
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+  });
+  const [region, setRegion] = React.useState({
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
   return (
-    <View>
-      <View style={styles.container}>
-      <MapView style={styles.map} />
+    <View style={styles.container}>
+      {/* <GooglePlacesAutocomplete
+        placeholder="Search"
+        fetchDetails={true}
+        GooglePlacesSearchQuery={{
+          rankby: "distance",
+        }}
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+          setRegion({
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          });
+        }}
+        query={{
+          key: "API_KEY",
+          language: "en",
+          components: "country:us",
+          types: "establishment",
+          radius: 30000,
+          location: `${region.latitude}, ${region.longitude}`,
+        }}
+        styles={{
+          container: {
+            flex: 0,
+            position: "absolute",
+            width: "100%",
+            zIndex: 10,
+          },
+          listView: { backgroundColor: "white" },
+        }}
+      /> api key needed -- additional feature */}
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        provider="google"
+      >
+        <Marker
+          coordinate={{
+            latitude: region.latitude,
+            longitude: region.longitude,
+          }}
+        >
+          <Image source={homeMarker} style={{height: 20, width: 20, zIndex: 10 }} />
+        </Marker>
+
+        <Marker
+          coordinate={pin}
+          icon={<EvilIcons name="location" size={24} color="black" />}
+          pinColor="black"
+          draggable={true}
+          onDragStart={(e) => {
+            console.log("Drag start", e.nativeEvent.coordinates);
+          }}
+          onDragEnd={(e) => {
+            setPin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+            setChartLocation({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
+        >
+          <Callout>
+            <Text>I'm here</Text>
+          </Callout>
+        </Marker>
+        <Circle center={pin} radius={1000} />
+      </MapView>
     </View>
-      <TouchableOpacity style={{backgroundColor: colors.green, padding: 4}} onPress={() => navigation.goBack()}>
-        <Text>Ok</Text>
-      </TouchableOpacity>
-    </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 });

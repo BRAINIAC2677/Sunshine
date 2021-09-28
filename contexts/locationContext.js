@@ -23,6 +23,7 @@ export function LocationProvider({ children }) {
   };
 
   const [location, setLocation] = useState(defaultLocation);
+  const [chartLocation, setChartLocation] = useState(location)
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -40,14 +41,21 @@ export function LocationProvider({ children }) {
       const location = await Location.getLastKnownPositionAsync({
         accuracy: 6,
       });
-      setLocation(location);
+      if (location) setLocation(location)
     } catch (error) {
       console.log(error);
     }
   }
 
+  const values = {
+    location,
+    error,
+    chartLocation,
+    setChartLocation,
+  }
+
   return (
-    <LocationContext.Provider value={{ location, error }}>
+    <LocationContext.Provider value={values}>
       {children}
     </LocationContext.Provider>
   );
