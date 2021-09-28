@@ -1,17 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import Calc from "../pages/calc";
+import Map from "../pages/map/Map";
+import { colors, fonts } from "../styles/global";
+import Header from "./header";
 
-import Calc from '../pages/calc'
-import Map from '../pages/map/Map'
-
-import { colors, fonts } from '../styles/global'
-
-const CalcStack = createStackNavigator()
+const CalcStack = createStackNavigator();
 
 export default function CalcStackNavigator() {
   return (
     <CalcStack.Navigator
-      initialRouteName={'Home'}
+      initialRouteName={"Home"}
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.lightbg,
@@ -23,15 +22,15 @@ export default function CalcStackNavigator() {
       }}
     >
       <CalcStack.Screen
-        name='Calc'
+        name="Calc"
         component={Calc}
-        options={{ headerShown: false }}
+        options={{ headerTitle: (props) => <Header {...props} title="Visualizer" /> }}
       />
       <CalcStack.Screen
-        name='Map'
+        name="Map"
         component={Map}
-        options={{ headerShown: false }}
+        options={{ headerTitle: (props) => <Header {...props} title="Map" /> }}
       />
     </CalcStack.Navigator>
-  )
+  );
 }

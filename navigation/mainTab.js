@@ -1,18 +1,15 @@
-import React from 'react'
+import {
+  Feather
+} from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-
+import React from 'react'
 import About from '../pages/about'
-import CalcStackNavigator from './calcStack'
-import RevCalcuSTackNavigator from './revCalcStack'
 import Home from '../pages/home/Home'
+import { colors } from '../styles/global'
+import CalcStackNavigator from './calcStack'
+import RevCalcStackNavigator from './revCalcStack'
 
-import {
-  FontAwesome,
-  Feather,
-} from '@expo/vector-icons';
-
-import {colors, fonts} from '../styles/global'
 
 const MainTab = createBottomTabNavigator()
 
@@ -22,14 +19,7 @@ export default function MainTabContainer() {
       <MainTab.Navigator
         initialRouteName={'Local'}
         screenOptions={({ route }) => ({
-          //header style
-          // header: ({ navigation, route, options }) => {
-          //   const title = getHeaderTitle(options, route.name);
-
-          //   return (
-          //     <MyHeader title={title} />
-          //   )
-          // },
+          headerShown: false,
           //label
           showLabel: true,
           tabBarActiveTintColor: colors.primary,
@@ -45,24 +35,24 @@ export default function MainTabContainer() {
                   <Feather name="home" size={24} color={colors.secondary} />
                 )
               }
-            } else if (route.name === 'Caclu') {
+            } else if (route.name === 'Visualizer') {
               if (focused) {
                 return (
-                  <FontAwesome name="globe" size={24} color={colors.primary} />
+                  <Feather name="bar-chart-2" size={24} color={colors.primary} />
                 )
               } else {
                 return (
-                  <FontAwesome name="globe" size={24} color={colors.secondary} />
+                  <Feather name="bar-chart-2" size={24} color={colors.secondary} />
                 )
               }
-            } else if (route.name === 'RevCalcu') {
+            } else if (route.name === 'User') {
               if (focused) {
                 return (
-                  <Feather name="settings" size={24} color={colors.primary} />
+                  <Feather name="user" size={24} color={colors.primary} />
                 )
               } else {
                 return (
-                  <Feather name="settings" size={24} color={colors.secondary} />
+                  <Feather name="user" size={24} color={colors.secondary} />
                 )
               }
             } else if (route.name === 'About') {
@@ -86,13 +76,13 @@ export default function MainTabContainer() {
         />
 
         <MainTab.Screen
-          name="Calcu"
+          name="Visualizer"
           component={CalcStackNavigator}
         />
 
         <MainTab.Screen
-          name="RevCalcu"
-          component={RevCalcuSTackNavigator}
+          name="User"
+          component={RevCalcStackNavigator}
         />
 
         <MainTab.Screen
