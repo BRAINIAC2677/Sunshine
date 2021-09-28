@@ -1,6 +1,12 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
 import { fonts } from "../../styles/global";
@@ -14,12 +20,16 @@ export default function Calc({ navigation }) {
       })}
     >
       <View
-        style={tw.style("shadow", {
+        style={{
           backgroundColor: item.secColor,
           ...styles.iconBg,
-        })}
+        }}
       >
-        <Feather name="sun" size={24} color="white" />
+        {item.title !== "Humidity" ? (
+          <Feather name={item.icon} size={24} color="white" />
+        ) : (
+          <Ionicons name={item.icon} size={24} color="white" />
+        )}
       </View>
       <Text style={styles.titleText}>{item.title}</Text>
     </TouchableOpacity>
@@ -29,7 +39,12 @@ export default function Calc({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.heading}>Visualize Data</Text>
 
-      <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+      <ScrollView
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <FlatList
           data={data}
           renderItem={({ item }) => renderCard(item)}
@@ -96,28 +111,28 @@ const data = [
   {
     id: 1,
     title: "Solar Data",
-    screen: "",
+    icon: "sun",
     bgColor: "#FF6968",
     secColor: "#FF8280",
   },
   {
     id: 2,
     title: "Temperature",
-    screen: "",
+    icon: "thermometer",
     bgColor: "#7A54FF",
     secColor: "#946BFF",
   },
   {
     id: 3,
     title: "Wind Data",
-    screen: "",
+    icon: "wind",
     bgColor: "#2AC3FF",
     secColor: "#39D4FD",
   },
   {
     id: 4,
-    title: "Humidity? Data",
-    screen: "",
+    title: "Humidity Data",
+    icon: "water-outline",
     bgColor: "#FF8F61",
     secColor: "#FFA57A",
   },
