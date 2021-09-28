@@ -1,14 +1,13 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
-import * as Location from 'expo-location'
+import * as Location from "expo-location";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const LocationContext = createContext()
+const LocationContext = createContext();
 
 export function useLocation() {
-  return useContext(LocationContext)
+  return useContext(LocationContext);
 }
 
-export function LocationProvider({children}) {
-
+export function LocationProvider({ children }) {
   const defaultLocation = {
     coords: {
       accuracy: 20.100000381469727,
@@ -21,31 +20,35 @@ export function LocationProvider({children}) {
     },
     mocked: false,
     timestamp: 1629471864197,
-  }
+  };
 
-  const [location, setLocation] = useState(defaultLocation)
-  const [error, setError] = useState('')
+  const [location, setLocation] = useState(defaultLocation);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    load()
-  }, [])
+    load();
+  }, []);
 
   async function load() {
-    let { status } = await Location.requestForegroundPermissionsAsync()
-    if (status !== 'granted') {
-      setError('Access to location is needed.')
-      return
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setError("Access to location is needed.");
+        return;
+      }
+
+      const location = await Location.getLastKnownPositionAsync({
+        accuracy: 6,
+      });
+      setLocation(location);
+    } catch (error) {
+      console.log(error);
     }
-
-    const location = await Location.getCurrentPositionAsync()
-    setLocation(location)
-
-    console.log(location)
   }
 
   return (
-    <LocationContext.Provider value={{location, error}}>
+    <LocationContext.Provider value={{ location, error }}>
       {children}
     </LocationContext.Provider>
-  )
+  );
 }
