@@ -1,12 +1,19 @@
-import axios from "axios";
+import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import Chart from "../../components/chart";
+import Error from "../../components/Error";
+import Loading from "../../components/Loading";
 import TimeSelector from "../../components/timeSelector";
+import {
+  dailyDataFormatter,
+  dataLoader,
+  monthlyDataFormatter,
+  yearlyDataFormatter
+} from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
-
-// const url = 'https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=90.3615&latitude=23.7548&start=20210101&end=20210331&format=JSON'
+import { fonts } from "../../styles/global";
 
 const Solar = () => {
   const { chartLocation } = useLocation();
@@ -14,43 +21,39 @@ const Solar = () => {
   const [temporal, setTemporal] = useState("daily");
   const [data, setData] = useState(null);
   const [labels, setLabels] = useState(null);
-  const [parameter, setParameter] = useState("ALLSKY_SFC_SW_DWN");
+  const [parameter] = useState("ALLSKY_SFC_SW_DWN");
   const [range, setRange] = useState({
     start: "20210101",
     end: "20210331",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [refresh, setRefresh] = useState(0);
 
-  console.log(
-    `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&start=20210101&end=20210331&format=JSON`
-  );
-  // console.log(url)
+  async function loadData(url) {
+    setError(null);
+    setLoading(true);
+    try {
+      const rawData = await dataLoader(url, parameter);
 
-  console.log(chartLocation);
-
-  const dataFormatter = (rawData) => {
-    const values = [];
-    const allLabels = [];
-    for (const key in rawData) {
-      values.push(rawData[key]);
-      const year = key.slice(0, 4);
-      const month = key.slice(4, 6);
-      const day = key.slice(6, 8);
-      allLabels.push(`${day}/${month}/${year}`);
+      if (temporal === "daily") {
+        const { values, selectedLabels } = dailyDataFormatter(rawData);
+        setData(values);
+        setLabels(selectedLabels);
+      } else if (temporal === "monthly") {
+        const { values, selectedLabels } = monthlyDataFormatter(rawData);
+        setData(values);
+        setLabels(selectedLabels);
+      } else if (temporal === "climatology") {
+        const { values, selectedLabels } = yearlyDataFormatter(rawData);
+        setData(values);
+        setLabels(selectedLabels);
+      }
+    } catch (error) {
+      setError(error);
     }
-    const selectedLabels = [];
-    for (let i = 0; i < 3; i++) {
-      const select = Math.floor((allLabels.length / 4) * i);
-      if (select >= allLabels.length) select--;
-      selectedLabels.push(allLabels[select]);
-    }
-    setData(values);
-    setLabels(selectedLabels);
-
-    //----------TODO------------------------
-    //handle climatology differently
-    //loading and error handling
-    //pass label and offsets to chart
-  };
+    setLoading(false);
+  }
 
   useEffect(() => {
     if (temporal === "daily") {
@@ -65,30 +68,55 @@ const Solar = () => {
       });
     }
 
-    let url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&start=${range.start}&end=${range.end}&format=JSON`;
-    if (temporal==='climatology') url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&format=JSON`
-    console.log(url)
-    axios
-      .get(url)
-      .then((response) => {
-        dataFormatter(response.data.properties.parameter[parameter]);
-      })
-      .catch((err) => console.error(err));
-  }, [temporal, chartLocation]);
+    let url =
+      "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=90.3615&latitude=23.7548&start=20210101&end=20210331&format=JSON";
+    url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&start=${range.start}&end=${range.end}&format=JSON`;
+    if (temporal === "climatology")
+      url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&format=JSON`;
+
+    loadData(url);
+  }, [temporal, chartLocation, refresh]);
 
   return (
-    <SafeAreaView style={tw`items-center justify-center`}>
+    <View style={tw`items-center justify-center`}>
       <TimeSelector temporal={temporal} setTemporal={setTemporal} />
 
-      {data && labels ? (
-        <Chart data={data} labels={labels} title={"Daily Solar Power"} />
+      <Text style={styles.title}>SOLAR POWER</Text>
+
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Error error={error} />
       ) : (
-        <Text>Loading</Text>
+        data &&
+        labels && (
+          <Chart data={data} labels={labels} title={"Daily Solar Power"} />
+        )
       )}
-    </SafeAreaView>
+
+      <TouchableOpacity
+        style={tw`bg-gray-300 mt-8 w-32 justify-center items-center h-12 rounded-lg shadow`}
+        onPress={() => setRefresh(refresh + 1)}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <AntDesign name="reload1" size={16} color="black" />
+          <Text style={styles.buttonText}>Reload</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 export default Solar;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  title: {
+    marginVertical: 10,
+    fontFamily: fonts.semibold,
+    fontSize: 16
+  },
+  buttonText: {
+    marginLeft: 12,
+    fontFamily: fonts.semibold,
+  },
+});

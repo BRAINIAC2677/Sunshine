@@ -14,7 +14,9 @@ import { fonts } from "../../styles/global";
 export default function Calc({ navigation }) {
   const renderCard = (item) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate(item.screen)}
+      onPress={() =>
+        navigation.navigate(item.screen, { parameter: item.parameter })
+      }
       style={tw.style("shadow-md p-4", {
         backgroundColor: item.bgColor,
         ...styles.card,
@@ -117,6 +119,7 @@ const data = [
     bgColor: "#FF6968",
     secColor: "#FF8280",
     screen: "Solar",
+    parameter: "ALLSKY_SFC_SW_DWN",
   },
   {
     id: 2,
@@ -125,6 +128,7 @@ const data = [
     bgColor: "#7A54FF",
     secColor: "#946BFF",
     screen: "Temperature",
+    parameter: "T2M",
   },
   {
     id: 3,
@@ -133,6 +137,7 @@ const data = [
     bgColor: "#2AC3FF",
     secColor: "#39D4FD",
     screen: "Wind",
+    parameter: "WS10M",
   },
   {
     id: 4,
@@ -141,5 +146,6 @@ const data = [
     bgColor: "#FF8F61",
     secColor: "#FFA57A",
     screen: "Humidity",
+    parameter: "RH2M",
   },
 ];

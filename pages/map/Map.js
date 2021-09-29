@@ -88,8 +88,10 @@ export default function Map({ navigation }) {
               longitude: e.nativeEvent.coordinate.longitude,
             });
             setChartLocation({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
+              coords: {
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              }
             });
           }}
         >
