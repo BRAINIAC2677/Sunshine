@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import Header from './header'
-import Map from '../pages/map/Map'
 import RevCalc from '../pages/revCalc'
+import Profile from '../pages/revCalc/profile'
 import { colors, fonts } from '../styles/global'
+import Header from './header'
 
 const RevCalcStack = createStackNavigator()
 
@@ -27,9 +27,9 @@ export default function RevCalcStackNavigator() {
         options={{ headerTitle: (props) => <Header {...props} title="User" /> }}
       />
       <RevCalcStack.Screen
-        name='Map'
-        component={Map}
-        options={{ headerTitle: (props) => <Header {...props} title="Pore nam dibo" /> }}
+        name='Profile'
+        component={Profile}
+        options={{ headerTitle: (props) => <Header {...props} title="Profile" /> }}
       />
     </RevCalcStack.Navigator>
   )

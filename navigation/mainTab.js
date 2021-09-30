@@ -4,16 +4,19 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
+import { useAuth } from '../contexts/authContext'
 import About from '../pages/about'
 import Home from '../pages/home/Home'
 import { colors } from '../styles/global'
 import CalcStackNavigator from './calcStack'
 import RevCalcStackNavigator from './revCalcStack'
-
+import AuthStackNavigator from "./authStack"
 
 const MainTab = createBottomTabNavigator()
 
 export default function MainTabContainer() {
+  const {currentUser} = useAuth()
+  
   return (
     <NavigationContainer>
       <MainTab.Navigator
@@ -82,7 +85,7 @@ export default function MainTabContainer() {
 
         <MainTab.Screen
           name="User"
-          component={RevCalcStackNavigator}
+          component={currentUser ? RevCalcStackNavigator : AuthStackNavigator}
         />
 
         <MainTab.Screen
