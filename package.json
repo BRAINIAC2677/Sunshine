@@ -11,6 +11,7 @@
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.7",
+    "@ubaids/react-native-material-textfield": "^0.16.3",
     "axios": "^0.21.4",
     "expo": "~42.0.1",
     "expo-app-loading": "^1.1.2",
