@@ -6,7 +6,7 @@ import homeMarker from "../../assets/homeMarker.png";
 import { useLocation } from "../../contexts/locationContext";
 
 export default function Map({ navigation }) {
-  const { location, setChartLocation } = useLocation();
+  const { location, setChartLocation, chartLocation } = useLocation();
 
   const [pin, setPin] = React.useState({
     latitude: location.coords.latitude,
@@ -75,7 +75,10 @@ export default function Map({ navigation }) {
         </Marker>
 
         <Marker
-          coordinate={pin}
+          coordinate={{
+            latitude: chartLocation.coords.latitude,
+            longitude: chartLocation.coords.longitude
+          }}
           icon={<EvilIcons name="location" size={24} color="black" />}
           pinColor="black"
           draggable={true}

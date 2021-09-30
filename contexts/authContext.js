@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import firebase, { auth } from "../config/firebaseConfig";
+import { useLocation } from "./locationContext";
 
 const AuthContext = React.createContext();
 
@@ -13,6 +14,8 @@ export function AuthProdiver({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const {location} = useLocation()
+
   async function signup(email, password, fullname) {
     setLoading(true);
     setError(null);
@@ -23,8 +26,9 @@ export function AuthProdiver({ children }) {
       try {
         await db.collection("users").doc(userCredential.user.uid).set({
           fullname: fullname || userCredential.user.displayName || "",
-          location: "",
-          monthlyData: [],
+          location: location,
+          size: "residential",
+          data: [],
         })
       } catch (error) {
         setError(error)
@@ -48,6 +52,7 @@ export function AuthProdiver({ children }) {
         db.collection("users").doc(userCredential.user.uid).set({
           fullname: fullname || userCredential.user.displayName || "",
           location: "",
+          // location: new firebase.firestore.GeoPoint(latitude, longitude)
           monthlyData: [],
         })
       })

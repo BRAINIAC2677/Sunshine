@@ -15,12 +15,12 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <AuthProdiver>
-        <LocationProvider>
+      <LocationProvider>
+        <AuthProdiver>
           <StatusBar animated={true} barStyle="dark-content" />
           <MainTabContainer />
-        </LocationProvider>
-      </AuthProdiver>
+        </AuthProdiver>
+      </LocationProvider>
     );
   } else {
     return <AppLoading />;
