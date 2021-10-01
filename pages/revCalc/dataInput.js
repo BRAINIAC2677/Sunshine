@@ -2,6 +2,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import {
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -63,7 +64,7 @@ const DataInput = ({ navigation }) => {
   };
 
   useEffect(() => {
-    setFound(null)
+    setFound(null);
     let db = firebase.firestore();
     db.collection("powerData")
       .where("user", "==", currentUser.uid)
@@ -77,12 +78,17 @@ const DataInput = ({ navigation }) => {
   }, [date]);
 
   return (
-    <View>
+    <View style={tw.style("flex h-full", { backgroundColor: colors.bg1 })}>
       <View style={tw`items-center justify-center`}>
+        <Image
+          source={require("../../assets/solar-panel.png")}
+          style={tw`w-32 h-32 mt-20 mb-8`}
+        />
+
         <Text
           style={tw.style("text-lg mt-12 mb-4", {
             fontFamily: fonts.regular,
-            color: colors.primary,
+            color: colors.text1,
           })}
         >
           Generated Energy (kW-hr)
@@ -105,13 +111,19 @@ const DataInput = ({ navigation }) => {
         )}
 
         <View style={tw`flex-row items-center mt-6 mr-auto px-10`}>
-          <Text style={tw.style("mr-2", { fontFamily: fonts.regular })}>
+          <Text
+            style={tw.style("mr-2", {
+              fontFamily: fonts.regular,
+              color: colors.text3,
+            })}
+          >
             Select Date:
           </Text>
           <TouchableOpacity onPress={() => setShow(true)}>
             <Text
-              style={tw.style("mr-2 bg-white rounded shadow px-4 py-2", {
+              style={tw.style("mr-2 bg-gray-600 rounded shadow px-2 py-1", {
                 fontFamily: fonts.semibold,
+                color: colors.text1,
               })}
             >
               {moment(date).format("DD/MM/YYYY")}
@@ -133,9 +145,7 @@ const DataInput = ({ navigation }) => {
         </View>
 
         <TouchableOpacity
-          style={tw.style("text-white px-6 py-3 mt-8 rounded shadow", {
-            backgroundColor: colors.primary,
-          })}
+          style={tw.style("px-6 bg-gray-600 py-3 mt-8 rounded shadow", {})}
           onPress={onSubmit}
         >
           <Text style={tw.style("text-white", { fontFamily: fonts.semibold })}>

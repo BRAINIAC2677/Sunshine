@@ -14,7 +14,7 @@ export default function AuthStackNavigator() {
     initialRouteName={"Sign Up"}
     screenOptions={{
       headerStyle: {
-        backgroundColor: colors.bg,
+        backgroundColor: colors.bg2,
       },
       headerTintColor: colors.primary,
       headerTitleStyle: {

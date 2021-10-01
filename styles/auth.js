@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fonts.bold,
     fontSize: 28,
-    color: colors.darkText,
+    color: colors.text1,
   },
   formContainer: {
     width: 320,
@@ -30,17 +30,17 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   errorText: {
-    color: 'red',
     fontSize: 12,
-    fontFamily: fonts.semibold
+    fontFamily: fonts.semibold,
+    color: "#EF4444",
   },
   inputWrapper: {
-    backgroundColor: 'white',
+    backgroundColor: colors.bg2,
     flexDirection: 'row',
     alignItems: 'center',
     width: 320,
     borderWidth: 2,
-    borderColor: colors.lightbg,
+    borderColor: colors.text2,
     borderRadius: 8,
     paddingVertical: 5,
     position: 'relative',
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     paddingLeft: 4,
     paddingVertical: 5,
+    color: colors.text1,
   },
   focusedInput: {
     borderColor: colors.primary,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: fonts.bold,
     fontSize: 14,
-    color: colors.primary,
+    color: colors.text3,
     marginVertical: 10,
   },
   socialConnectContainer: {

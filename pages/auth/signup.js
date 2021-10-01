@@ -1,20 +1,19 @@
 import React from 'react';
 import { Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import tw from 'tailwind-react-native-classnames';
 import RegistrationForm from '../../components/forms/registrationForm';
 import SocialConnect from '../../components/forms/socialConnect';
-import { useAuth } from '../../contexts/authContext';
 import styles from '../../styles/auth';
+import { colors } from '../../styles/global';
 
 export default function Signup({ navigation }) {
-
-  const { login } = useAuth()
 
   function toLogin() {
     navigation.navigate('Login')
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={tw.style("", { backgroundColor: colors.bg1 })}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.topContainer}>

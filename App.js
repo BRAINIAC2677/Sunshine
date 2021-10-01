@@ -17,7 +17,7 @@ export default function App() {
     return (
       <LocationProvider>
         <AuthProdiver>
-          <StatusBar animated={true} barStyle="dark-content" />
+          <StatusBar animated={true} style="light" />
           <MainTabContainer />
         </AuthProdiver>
       </LocationProvider>

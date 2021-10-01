@@ -5,7 +5,7 @@ import tw from 'tailwind-react-native-classnames'
 import * as yup from 'yup'
 import { useAuth } from '../../contexts/authContext'
 import styles from '../../styles/auth'
-import { colors, fonts } from '../../styles/global'
+import { fonts } from '../../styles/global'
 import CustomTextInput from './customTextInput'
 
 const fomrValidation = yup.object({
@@ -95,9 +95,7 @@ export default function RegistrationForm() {
           </View>
 
           <TouchableOpacity
-            style={tw.style("px-8 py-3 rounded my-4", {
-              backgroundColor: colors.primary
-            })}
+            style={tw.style("px-8 py-3 rounded my-4 bg-gray-600", {})}
             onPress={props.handleSubmit}
           >
             {

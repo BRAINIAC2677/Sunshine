@@ -15,7 +15,7 @@ export default function RevCalcStackNavigator() {
     initialRouteName={"RevCalc"}
     screenOptions={{
       headerStyle: {
-        backgroundColor: colors.lightbg,
+        backgroundColor: colors.bg2,
       },
       headerTintColor: colors.primary,
       headerTitleStyle: {

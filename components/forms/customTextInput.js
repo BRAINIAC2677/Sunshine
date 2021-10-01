@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
 import styles from '../../styles/auth'
+import { colors } from '../../styles/global'
 
 
 export default function CustomTextInput({
@@ -23,8 +24,8 @@ export default function CustomTextInput({
       <Ionicons 
         name={icon}
         size={24}
-        color='black'
-        style={[styles.inputIcon], {left: 10, opacity: .6}}
+        color={colors.text1}
+        style={[styles.inputIcon], {left: 10, opacity: 0.6}}
       />
 
       <TextInput
@@ -34,6 +35,7 @@ export default function CustomTextInput({
         value={value}
         autoCapitalize='none'
         placeholder={placeholder}
+        placeholderTextColor={colors.text3}
         secureTextEntry={hidden}
         style={styles.input}
       />
@@ -44,9 +46,9 @@ export default function CustomTextInput({
           onPress={() => setHidden(!hidden)}
         >
           {hidden ? (
-            <Ionicons name="md-eye" size={24} color="black" />
+            <Ionicons name="md-eye" size={24} color={colors.text1} />
           ) : (
-            <Ionicons name="eye-off" size={24} color="black" />
+            <Ionicons name="eye-off" size={24} color={colors.text1} />
           )}
         </TouchableOpacity>
       )}

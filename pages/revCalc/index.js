@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 import tw from "tailwind-react-native-classnames";
-import { fonts } from "../../styles/global";
+import { colors, fonts } from "../../styles/global";
 
 export default function RevCalc({ navigation }) {
  
@@ -32,7 +32,7 @@ export default function RevCalc({ navigation }) {
   );
 
   return (
-    <View style={tw`mt-12`}>
+    <View style={tw.style(`pt-12 flex h-full`, {backgroundColor: colors.bg1})}>
         {data.map(item => renderCard(item))}
     </View>
   );
