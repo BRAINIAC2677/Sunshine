@@ -1,6 +1,4 @@
-import {
-  Feather
-} from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
@@ -61,14 +59,14 @@ export default function MainTabContainer() {
                   <Feather name="user" size={24} color={colors.text2} />
                 )
               }
-            } else if (route.name === 'About') {
+            } else if (route.name === 'Calculator') {
               if (focused) {
                 return (
-                  <Feather name="info" size={24} color={colors.primary} />
+                  <AntDesign name="calculator" size={24} color={colors.primary} />
                 )
               } else {
                 return (
-                  <Feather name="info" size={24} color={colors.text2} />
+                  <AntDesign name="calculator" size={24} color={colors.text2} />
                 )
               }
             } else return <></>
@@ -92,7 +90,7 @@ export default function MainTabContainer() {
         />
 
         <MainTab.Screen
-          name="About"
+          name="Calculator"
           component={About}
         />
 

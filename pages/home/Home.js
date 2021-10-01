@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { colors, fonts } from "../../styles/global";
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   return (
     <View style={tw.style(styles.container)}>
       <View
@@ -16,7 +16,7 @@ export default function Home({navigation}) {
         <Text
           style={tw.style(
             `capitalize tracking-widest text-4xl text-black text-center`,
-            {fontFamily: fonts.semibold}
+            { fontFamily: fonts.semibold }
           )}
         >
           sunshine{"\n\n"}
@@ -32,7 +32,9 @@ export default function Home({navigation}) {
       </View>
       <View style={tw.style(styles.lower, "px-6 justify-around")}>
         <Text
-          style={tw.style(styles.tag, "mt-4 capitalize text-left text-3xl", {fontFamily: fonts.regular})}
+          style={tw.style(styles.tag, "mt-4 capitalize text-left text-3xl", {
+            fontFamily: fonts.regular,
+          })}
         >
           explore your solar {"\n"}possibilities
         </Text>
@@ -41,9 +43,12 @@ export default function Home({navigation}) {
             styles.button,
             "flex-row justify-center items-center h-12 p-4 rounded-xl"
           )}
+          onPress={() => navigation.navigate("Visualizer")}
         >
-          <Text style={tw.style("mr-4 capitalize text-xl", {fontFamily: fonts.semibold})}
-            onPress={() => navigation.navigate("Visualizer")}
+          <Text
+            style={tw.style("mr-4 capitalize text-xl", {
+              fontFamily: fonts.semibold,
+            })}
           >
             get started
           </Text>

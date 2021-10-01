@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
               source={require("../../assets/solar-panel.png")}
               style={tw`w-32 h-32 mb-8`}
             />
-            <Text style={styles.title}>Solar Stat</Text>
+            <Text style={styles.title}>Sunshine</Text>
           </View>
 
           <View>

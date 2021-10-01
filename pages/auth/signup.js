@@ -17,7 +17,7 @@ export default function Signup({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <Text style={styles.title}>Solar Stat</Text>
+          <Text style={styles.title}>Sunshine</Text>
         </View>
 
         <RegistrationForm />

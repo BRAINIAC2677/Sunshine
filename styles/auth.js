@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fonts.bold,
     fontSize: 28,
-    color: colors.text1,
+    color: colors.accent,
   },
   formContainer: {
     width: 320,
