@@ -66,7 +66,6 @@ const DataInput = ({ navigation }) => {
 
   useEffect(() => {
     setFound(null);
-    setPower()
     let db = firebase.firestore();
     db.collection("powerData")
       .where("user", "==", currentUser.uid)
