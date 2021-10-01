@@ -2,14 +2,14 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { useLocation } from "../contexts/locationContext";
-import { fonts, colors } from "../styles/global";
+import { colors, fonts } from "../styles/global";
 
 const Location = () => {
   const { chartLocation } = useLocation();
 
   return (
     <View
-      style={tw.style("flex pl-4 items-center justify-center", {
+      style={tw.style("flex pl-4 justify-center", {
         borderLeftWidth: 5,
         borderLeftColor: colors.accent,
       })}

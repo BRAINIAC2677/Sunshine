@@ -66,6 +66,7 @@ const DataInput = ({ navigation }) => {
 
   useEffect(() => {
     setFound(null);
+    setPower()
     let db = firebase.firestore();
     db.collection("powerData")
       .where("user", "==", currentUser.uid)
@@ -95,7 +96,7 @@ const DataInput = ({ navigation }) => {
           Generated Energy (kW-hr)
         </Text>
         <CustomTextInput
-          placeholder="eg, 700"
+          placeholder="eg, 15"
           onChangeText={setPower}
           value={power}
           icon="ios-sunny-outline"

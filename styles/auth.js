@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
     paddingVertical: 5,
     color: colors.text1,
+    fontFamily: fonts.regular,
   },
   focusedInput: {
     borderColor: colors.primary,

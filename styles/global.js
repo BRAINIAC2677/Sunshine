@@ -26,7 +26,7 @@ export const colors = {
 };
 
 export const fonts = {
-  bold: "barlow-bold",
-  regular: "barlow-regular",
-  semibold: "barlow-semibold",
+  bold: "exo-bold",
+  regular: "exo-regular",
+  semibold: "exo-semibold",
 };

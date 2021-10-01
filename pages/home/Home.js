@@ -1,10 +1,10 @@
-import React from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import tw from "tailwind-react-native-classnames";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "../../styles/global";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import tw from "tailwind-react-native-classnames";
+import { colors, fonts } from "../../styles/global";
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <View style={tw.style(styles.container)}>
       <View
@@ -15,7 +15,8 @@ export default function Home() {
       >
         <Text
           style={tw.style(
-            `capitalize tracking-widest text-4xl text-black text-center`
+            `capitalize tracking-widest text-4xl text-black text-center`,
+            {fontFamily: fonts.semibold}
           )}
         >
           sunshine{"\n\n"}
@@ -31,7 +32,7 @@ export default function Home() {
       </View>
       <View style={tw.style(styles.lower, "px-6 justify-around")}>
         <Text
-          style={tw.style(styles.tag, "mt-4 capitalize text-left text-3xl")}
+          style={tw.style(styles.tag, "mt-4 capitalize text-left text-3xl", {fontFamily: fonts.regular})}
         >
           explore your solar {"\n"}possibilities
         </Text>
@@ -41,7 +42,9 @@ export default function Home() {
             "flex-row justify-center items-center h-12 p-4 rounded-xl"
           )}
         >
-          <Text style={tw.style("mr-4 capitalize font-bold text-xl")}>
+          <Text style={tw.style("mr-4 capitalize text-xl", {fontFamily: fonts.semibold})}
+            onPress={() => navigation.navigate("Visualizer")}
+          >
             get started
           </Text>
           <AntDesign name="arrowright" size={24} color="black" />

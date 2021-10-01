@@ -43,6 +43,11 @@ const Stats = () => {
           response.data.properties.parameter["ALLSKY_SFC_SW_DWN"][
             moment(value.date).format("YYYYMMDD")
           ];
+
+        if (irradiance < 0) {
+          setNoData(true)
+          return
+        }
         const energy = irradiance * 1.8;
         setComparisonData({
           labels: ["Output", "Expected"],

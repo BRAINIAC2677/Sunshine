@@ -8,9 +8,9 @@ import MainTabContainer from "./navigation/mainTab";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    "barlow-regular": require("./assets/fonts/Barlow-Regular.ttf"),
-    "barlow-bold": require("./assets/fonts/Barlow-Bold.ttf"),
-    "barlow-semibold": require("./assets/fonts/Barlow-SemiBold.ttf"),
+    "exo-regular": require("./assets/fonts/Exo-Regular.ttf"),
+    "exo-bold": require("./assets/fonts/Exo-Bold.ttf"),
+    "exo-semibold": require("./assets/fonts/Exo-SemiBold.ttf"),
   });
 
   if (fontsLoaded) {

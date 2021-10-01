@@ -1,11 +1,10 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
@@ -35,7 +34,7 @@ export default function Calc({ navigation }) {
           <Ionicons name={item.icon} size={24} color="black" />
         )}
       </View>
-      <Text style={tw.style("text-white text-xl font-bold")}>{item.title}</Text>
+      <Text style={tw.style("text-white", {fontFamily: fonts.semibold, fontSize: 18})}>{item.title}</Text>
     </TouchableOpacity>
   );
 
@@ -49,6 +48,7 @@ export default function Calc({ navigation }) {
       <Text
         style={tw.style("mt-20 mb-8 tracking-wide text-4xl text-center", {
           color: colors.accent,
+          fontFamily: fonts.bold
         })}
       >
         Solar Visualizer
@@ -65,7 +65,7 @@ export default function Calc({ navigation }) {
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Feather name="map" size={16} color={colors.accent} />
-          <Text style={tw.style("ml-4 text-white text-lg font-bold")}>
+          <Text style={tw.style("ml-4 text-white", {fontFamily: fonts.bold, fontSize: 16})}>
             Change Location
           </Text>
         </View>
