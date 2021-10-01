@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { useAuth } from '../contexts/authContext'
-import About from '../pages/about'
+import About from '../pages/calculator'
 import Home from '../pages/home/Home'
 import { colors } from '../styles/global'
 import AuthStackNavigator from "./authStack"

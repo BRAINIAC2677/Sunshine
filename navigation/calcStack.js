@@ -1,10 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import Calc from "../pages/calc";
-import Humidity from "../pages/calc/humidity";
-import Solar from "../pages/calc/solar";
-import Temperature from "../pages/calc/temperature";
-import Wind from "../pages/calc/wind";
+import Calc from "../pages/visualizer";
+import Humidity from "../pages/visualizer/humidity";
+import Solar from "../pages/visualizer/solar";
+import Temperature from "../pages/visualizer/temperature";
+import Wind from "../pages/visualizer/wind";
 import Map from "../pages/map/Map";
 import { colors, fonts } from "../styles/global";
 import Header from "./header";
@@ -29,8 +29,8 @@ export default function CalcStackNavigator() {
       <CalcStack.Screen
         name="Calc"
         component={Calc}
-        screenOptions={{headerShown: false,}}
-        options={{headerShown: false}}
+        screenOptions={{ headerShown: false }}
+        options={{ headerShown: false }}
       />
       <CalcStack.Screen
         name="Map"
@@ -40,22 +40,32 @@ export default function CalcStackNavigator() {
       <CalcStack.Screen
         name="Solar"
         component={Solar}
-        options={{ headerTitle: (props) => <Header {...props} title="Solar Irradiance" /> }}
+        options={{
+          headerTitle: (props) => (
+            <Header {...props} title="Solar Irradiance" />
+          ),
+        }}
       />
       <CalcStack.Screen
         name="Temperature"
         component={Temperature}
-        options={{ headerTitle: (props) => <Header {...props} title="Temperature" /> }}
+        options={{
+          headerTitle: (props) => <Header {...props} title="Temperature" />,
+        }}
       />
       <CalcStack.Screen
         name="Wind"
         component={Wind}
-        options={{ headerTitle: (props) => <Header {...props} title="Wind Flow" /> }}
+        options={{
+          headerTitle: (props) => <Header {...props} title="Wind Flow" />,
+        }}
       />
       <CalcStack.Screen
         name="Humidity"
         component={Humidity}
-        options={{ headerTitle: (props) => <Header {...props} title="Humidity" /> }}
+        options={{
+          headerTitle: (props) => <Header {...props} title="Humidity" />,
+        }}
       />
     </CalcStack.Navigator>
   );
