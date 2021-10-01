@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   Image,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -78,7 +79,7 @@ const DataInput = ({ navigation }) => {
   }, [date]);
 
   return (
-    <View style={tw.style("flex h-full", { backgroundColor: colors.bg1 })}>
+    <ScrollView style={tw.style("flex h-full", { backgroundColor: colors.bg1 })}>
       <View style={tw`items-center justify-center`}>
         <Image
           source={require("../../assets/solar-panel.png")}
@@ -153,7 +154,8 @@ const DataInput = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView
+    >
   );
 };
 

@@ -1,19 +1,63 @@
+import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import { ContributionGraph } from "react-native-chart-kit";
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
+import { BarChart, ContributionGraph } from "react-native-chart-kit";
 import tw from "tailwind-react-native-classnames";
 import PolarBear from "../../assets/polar-bear.png";
+import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import firebase from "../../config/firebaseConfig";
 import { useAuth } from "../../contexts/authContext";
+import { useLocation } from "../../contexts/locationContext";
 import { colors, fonts } from "../../styles/global";
 
 const Stats = () => {
   const [selectedData, setSelectedData] = useState(null);
   const [powerData, setPowerData] = useState(null);
+  const [comparisonData, setComparisonData] = useState(null);
+  const [noData, setNoData] = useState(false);
 
   const { currentUser } = useAuth();
+  const { location } = useLocation();
+
+  const handleCompare = (value) => {
+    setSelectedData(value);
+    setNoData(false);
+    const url = `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${
+      location.coords.longitude
+    }&latitude=${location.coords.longitude}&start=${moment(value.date).format(
+      "YYYYMMDD"
+    )}&end=${moment(value.date).format("YYYYMMDD")}&format=JSON`;
+    axios
+      .get(url)
+      .then((response) => {
+        const irradiance =
+          response.data.properties.parameter["ALLSKY_SFC_SW_DWN"][
+            moment(value.date).format("YYYYMMDD")
+          ];
+        const energy = irradiance * 1.8;
+        setComparisonData({
+          labels: ["Output", "Expected"],
+          datasets: [
+            {
+              data: [value.count, energy],
+            },
+          ],
+        });
+      })
+      .catch((e) => {
+        setNoData(true);
+        setComparisonData([value.count, 0]);
+      });
+  };
 
   useEffect(() => {
     let db = firebase.firestore();
@@ -31,10 +75,9 @@ const Stats = () => {
       });
   }, [currentUser]);
 
-  // console.log(powerData)
 
   return (
-    <View
+    <ScrollView
       style={tw.style(` flex h-full`, {
         backgroundColor: colors.bg1,
       })}
@@ -56,14 +99,16 @@ const Stats = () => {
           height={220}
           chartConfig={chartConfig}
           onDayPress={(value) => {
-            setSelectedData(value);
+            handleCompare(value);
           }}
         />
       ) : (
-        <Loading />
+        <View style={tw`items-center justify-center w-full`}>
+          <Loading />
+        </View>
       )}
-      
-      <View style={tw.style("p-4 mx-8 rounded-lg bg-gray-700 mt-12", {})}>
+
+      <View style={tw.style("p-4 mx-8 rounded-lg bg-gray-700 mt-8", {})}>
         <Image
           source={PolarBear}
           style={tw.style("w-16 h-16 z-50 absolute right-10 top-4")}
@@ -74,7 +119,10 @@ const Stats = () => {
             fontSize: 16,
           })}
         >
-          {!selectedData?.count ? "1 kW-hr " : `On ${moment(selectedData.date).format("DD/MM/YYYY")}, you `}reduce{" "}
+          {!selectedData?.count
+            ? "1 kW-hr "
+            : `On ${moment(selectedData.date).format("DD/MM/YYYY")}, you `}
+          reduce{" "}
         </Text>
         <Text
           style={tw.style("text-2xl my-2", {
@@ -82,7 +130,10 @@ const Stats = () => {
             fontFamily: fonts.bold,
           })}
         >
-          {selectedData?.count>0 ? parseFloat(0.92*selectedData.count).toFixed(2) : 0.92} lb
+          {selectedData?.count > 0
+            ? parseFloat(0.92 * selectedData.count).toFixed(2)
+            : 0.92}{" "}
+          lb
         </Text>
         <Text style={tw.style("text-gray-300", { fontFamily: fonts.regular })}>
           off your daily carbon footprint. If you want to do something good for
@@ -91,7 +142,50 @@ const Stats = () => {
         </Text>
       </View>
 
-    </View>
+      <View
+        style={tw.style("items-center my-8 rounded-xl py-4 mx-8", {
+          backgroundColor: colors.bg1,
+        })}
+      >
+        <Text
+          style={tw.style("text-gray-200 mb-6", {
+            fontFamily: fonts.semibold,
+            fontSize: 16,
+          })}
+        >
+          Generated vs Expected energy (
+          {moment(selectedData?.date).format("DD/MM/YYYY")})
+        </Text>
+
+        {selectedData && comparisonData && !noData ? (
+          <BarChart
+            data={comparisonData}
+            width={Dimensions.get("window").width - 60}
+            height={220}
+            chartConfig={{
+              ...chartConfig,
+              backgroundGradientFrom: colors.bg1,
+              backgroundGradientTo: colors.bg1,
+            }}
+            fromZero={true}
+            style={{
+              paddingVertical: 8,
+              borderRadius: 16,
+            }}
+          />
+        ) : selectedData && noData ? (
+          <Error
+            error={{
+              message: "No data available in NASA API to compare for this day.",
+            }}
+          />
+        ) : (
+          <Error
+            error={{ message: "Select a day from the heat map to compare" }}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -109,3 +203,12 @@ const chartConfig = {
 };
 
 const styles = StyleSheet.create({});
+
+const data = {
+  labels: ["Output", "Expected"],
+  datasets: [
+    {
+      data: [20, 45],
+    },
+  ],
+};

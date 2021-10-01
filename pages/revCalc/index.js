@@ -17,12 +17,12 @@ export default function RevCalc({ navigation }) {
         navigation.navigate(item.screen)
       }
       style={tw.style("shadow-md px-6 py-4 flex-row rounded-lg mx-8 my-3 items-center", {
-        backgroundColor: item.bgColor,
+        backgroundColor: colors.secondaryBg,
       })}
     >
       <View
         style={tw.style("p-4 rounded-full mr-4", {
-          backgroundColor: item.secColor,
+          backgroundColor: colors.accent,
         })}
       >
         <Feather name={item.icon} size={24} color="white" />
