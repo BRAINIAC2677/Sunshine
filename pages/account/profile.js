@@ -25,7 +25,7 @@ const Profile = () => {
   return (
     <View
       style={tw.style("flex h-full items-center justify-center", {
-        backgroundColor: colors.bg1,
+        backgroundColor: colors.primaryBg,
       })}
     >
       <Image
@@ -54,10 +54,10 @@ const Profile = () => {
       
 
       <TouchableOpacity
-        style={tw.style("bg-gray-600 px-6 py-3 rounded shadow")}
+        style={tw.style("px-6 py-3 rounded shadow", {backgroundColor: colors.accent})}
         onPress={logout}
       >
-        <Text style={tw.style("", { fontFamily: fonts.semibold, color: colors.text1 })}>Logout</Text>
+        <Text style={tw.style("", { fontFamily: fonts.semibold, color: "black" })}>Logout</Text>
       </TouchableOpacity>
     </View>
   );

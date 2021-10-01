@@ -77,7 +77,7 @@ const Solar = () => {
   return (
     <View
       style={tw.style("items-center flex h-full", {
-        backgroundColor: colors.bg1,
+        backgroundColor: colors.primaryBg,
       })}
     >
       <TimeSelector temporal={temporal} setTemporal={setTemporal} />
@@ -134,11 +134,11 @@ const Solar = () => {
       </View>
 
       <TouchableOpacity
-        style={tw`bg-gray-600 mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`}
+        style={tw.style(`mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`, {backgroundColor: colors.secondaryBg})}
         onPress={() => setRefresh(refresh + 1)}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <AntDesign name="reload1" size={16} color={colors.text1} />
+          <AntDesign name="reload1" size={16} color={colors.accent} />
           <Text style={[styles.buttonText, { color: colors.text1 }]}>
             Reload
           </Text>
@@ -152,7 +152,7 @@ export default Solar;
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.text1,
+    color: colors.accent,
     marginVertical: 12,
     fontFamily: fonts.semibold,
     fontSize: 16,
@@ -164,6 +164,6 @@ const styles = StyleSheet.create({
 });
 
 
-const dailyText = "Daily Solar irradiance (kW-hr/m2/day) gives an idea about how much solar energy you can generate in your locality. You can interact real time with data from NASA API by changing location and time range. If an error is generated make sure the time range is valid and try again by reloading."
+const dailyText = "Daily Solar irradiance (kW-hr/m2/day) gives an idea about how much solar energy you can generate in your locality. You can interact real time with data from NASA API by changing location and time range."
 const monthlyText = "Monthly solar irradiance (kW-hr/m2/day) gives an idea about last 5 years monthly data. You can take descition about your solar energy from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading."
 const yearlyText = "This dataset (kW-hr/m2/day) is generated according to the climatological solar irradiance from 1990. It shows a clear picture about solar power in the basis of long term. This data is fetched from NASA and based on your selected location If an error is generated make sure the time range is valid and try again by reloading."

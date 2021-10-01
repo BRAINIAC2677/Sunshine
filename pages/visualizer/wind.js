@@ -134,11 +134,11 @@ const Wind = () => {
       </View>
 
       <TouchableOpacity
-        style={tw`bg-gray-600 mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`}
+        style={tw.style(`mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`, {backgroundColor: colors.secondaryBg})}
         onPress={() => setRefresh(refresh + 1)}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <AntDesign name="reload1" size={16} color={colors.text1} />
+          <AntDesign name="reload1" size={16} color={colors.accent} />
           <Text style={[styles.buttonText, { color: colors.text1 }]}>
             Reload
           </Text>
@@ -152,7 +152,7 @@ export default Wind;
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.text1,
+    color: colors.accent,
     marginVertical: 12,
     fontFamily: fonts.semibold,
     fontSize: 16,

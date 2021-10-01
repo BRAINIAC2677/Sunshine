@@ -6,18 +6,18 @@ import { colors, fonts } from '../styles/global'
 
 const TimeSelector = ({temporal, setTemporal}) => {
   return (
-    <View style={tw`bg-gray-600 flex-row rounded-full my-4 shadow-md`}>
+    <View style={tw.style(`flex-row rounded-full my-4 shadow-md`, {backgroundColor: colors.secondaryBg})}>
         <TouchableOpacity
           onPress={() => setTemporal("daily")}
           style={[
             styles.tempoSelect,
-            temporal === "daily" && { backgroundColor: colors.bg2 },
+            temporal === "daily" && { backgroundColor: colors.accent },
           ]}
         >
           <Text
             style={[
               styles.tempoText,
-              temporal === "daily" && { color: "white" },
+              temporal === "daily" && { color: "black" },
             ]}
           >
             Daily
@@ -27,13 +27,13 @@ const TimeSelector = ({temporal, setTemporal}) => {
           onPress={() => setTemporal("monthly")}
           style={[
             styles.tempoSelect,
-            temporal === "monthly" && { backgroundColor: colors.bg2 },
+            temporal === "monthly" && { backgroundColor: colors.accent },
           ]}
         >
           <Text
             style={[
               styles.tempoText,
-              temporal === "monthly" && { color: "white" },
+              temporal === "monthly" && { color: "black" },
             ]}
           >
             Monthly
@@ -43,13 +43,13 @@ const TimeSelector = ({temporal, setTemporal}) => {
           onPress={() => setTemporal("climatology")}
           style={[
             styles.tempoSelect,
-            temporal === "climatology" && { backgroundColor: colors.bg2 },
+            temporal === "climatology" && { backgroundColor: colors.accent },
           ]}
         >
           <Text
             style={[
               styles.tempoText,
-              temporal === "climatology" && { color: "white" },
+              temporal === "climatology" && { color: "black" },
             ]}
           >
             Yearly

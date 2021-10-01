@@ -5,7 +5,7 @@ import tw from "tailwind-react-native-classnames";
 import * as yup from "yup";
 import { useAuth } from "../../contexts/authContext";
 import styles from "../../styles/auth";
-import { fonts } from "../../styles/global";
+import { colors, fonts } from "../../styles/global";
 import CustomTextInput from "./customTextInput";
 
 const fomrValidation = yup.object({
@@ -77,14 +77,14 @@ export default function LoginForm() {
           </View>
 
           <TouchableOpacity
-            style={tw.style("px-8 py-3 rounded my-4 bg-gray-600", {})}
+            style={tw.style("px-8 py-3 rounded my-4", {backgroundColor: colors.accent})}
             onPress={props.handleSubmit}
           >
             {loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
               <Text
-                style={tw.style("text-white", { fontFamily: fonts.semibold })}
+                style={tw.style("text-black", { fontFamily: fonts.semibold })}
               >
                 Log in
               </Text>

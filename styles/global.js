@@ -11,7 +11,7 @@ export const colors = {
 
   text1: "#fcfcfc",
   text2: "#6C757D",
-  text3: "#a9bbcc",
+  text3: "#ddd",
 
   lightbg: "#FCFCFC",
   darkbg: "#161625",

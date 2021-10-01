@@ -31,24 +31,21 @@ const Stats = () => {
   const handleCompare = (value) => {
     setSelectedData(value);
     setNoData(false);
-    const url = `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${
-      location.coords.longitude
-    }&latitude=${location.coords.longitude}&start=${moment(value.date).format(
-      "YYYYMMDD"
-    )}&end=${moment(value.date).format("YYYYMMDD")}&format=JSON`;
+    const url = `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=${location.coords.longitude}&latitude=${location.coords.longitude}&start=${moment(value.date).format("YYYYMMDD")}&end=${moment(value.date).format("YYYYMMDD")}&format=JSON`;
+    
+    console.log(url)
     axios
       .get(url)
       .then((response) => {
         const irradiance =
-          response.data.properties.parameter["ALLSKY_SFC_SW_DWN"][
-            moment(value.date).format("YYYYMMDD")
-          ];
+          response.data.properties?.parameter["ALLSKY_SFC_SW_DWN"][moment(value.date).format("YYYYMMDD")];
 
-        if (irradiance < 0) {
-          setNoData(true)
-          return
+        if (!irradiance || irradiance < 0) {
+          setNoData(true);
+          return;
         }
         const energy = irradiance * 1.8;
+
         setComparisonData({
           labels: ["Output", "Expected"],
           datasets: [
@@ -60,7 +57,6 @@ const Stats = () => {
       })
       .catch((e) => {
         setNoData(true);
-        setComparisonData([value.count, 0]);
       });
   };
 
@@ -80,11 +76,10 @@ const Stats = () => {
       });
   }, [currentUser]);
 
-
   return (
     <ScrollView
       style={tw.style(` flex h-full`, {
-        backgroundColor: colors.bg1,
+        backgroundColor: colors.primaryBg,
       })}
     >
       <Text
@@ -113,13 +108,13 @@ const Stats = () => {
         </View>
       )}
 
-      <View style={tw.style("p-4 mx-8 rounded-lg bg-gray-700 mt-8", {})}>
+      <View style={tw.style("p-4 mx-8 rounded-lg mt-8", {backgroundColor: colors.secondaryBg})}>
         <Image
           source={PolarBear}
           style={tw.style("w-16 h-16 z-50 absolute right-10 top-4")}
         />
         <Text
-          style={tw.style("text-gray-200", {
+          style={tw.style("text-gray-100", {
             fontFamily: fonts.semibold,
             fontSize: 16,
           })}
@@ -131,7 +126,7 @@ const Stats = () => {
         </Text>
         <Text
           style={tw.style("text-2xl my-2", {
-            color: colors.text1,
+            color: "white",
             fontFamily: fonts.bold,
           })}
         >
@@ -140,7 +135,7 @@ const Stats = () => {
             : 0.92}{" "}
           lb
         </Text>
-        <Text style={tw.style("text-gray-300", { fontFamily: fonts.regular })}>
+        <Text style={tw.style("text-gray-100", { fontFamily: fonts.regular })}>
           off your daily carbon footprint. If you want to do something good for
           the planet reduce your carbon footprint. The polar bears will thank
           you.
@@ -149,7 +144,7 @@ const Stats = () => {
 
       <View
         style={tw.style("items-center my-8 rounded-xl py-4 mx-8", {
-          backgroundColor: colors.bg1,
+          backgroundColor: colors.primaryBg,
         })}
       >
         <Text
@@ -169,8 +164,8 @@ const Stats = () => {
             height={220}
             chartConfig={{
               ...chartConfig,
-              backgroundGradientFrom: colors.bg1,
-              backgroundGradientTo: colors.bg1,
+              backgroundGradientFrom: colors.primaryBg,
+              backgroundGradientTo: colors.primaryBg,
             }}
             fromZero={true}
             style={{
@@ -197,11 +192,11 @@ const Stats = () => {
 export default Stats;
 
 const chartConfig = {
-  backgroundGradientFrom: colors.bg2,
+  backgroundGradientFrom: colors.secondaryBg,
   backgroundGradientFromOpacity: 1,
-  backgroundGradientTo: colors.bg2,
+  backgroundGradientTo: colors.secondaryBg,
   backgroundGradientToOpacity: 1,
-  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity || 1})`,
+  color: (opacity = 1) => `rgba(248, 198, 28, ${opacity || 1})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional

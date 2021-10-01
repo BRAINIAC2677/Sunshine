@@ -24,9 +24,10 @@ const DateSelector = ({date, setDate}) => {
       <View style={tw`flex-row items-center`}>
         <TouchableOpacity onPress={() => setShow(true)}>
           <Text
-            style={tw.style("mr-2 bg-gray-600 rounded shadow px-2 py-1", {
+            style={tw.style("mr-2 rounded shadow px-2 py-1", {
               fontFamily: fonts.semibold,
-              color: colors.text3
+              color: colors.text3,
+              backgroundColor: colors.secondaryBg
             })}
           >
             {moment(formatDate).format("DD/MM/YYYY")}

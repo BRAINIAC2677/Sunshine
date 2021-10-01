@@ -33,15 +33,15 @@ const Chart = ({ data, labels, fromZero=true }) => {
           backgroundColor: colors.bg2,
           backgroundGradientFrom: colors.bg2,
           backgroundGradientTo: colors.bg2,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          color: (opacity = 1) => `rgba(248, 198, 28, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(248, 198, 28, ${opacity})`,
           style: {
             borderRadius: 16,
           },
           propsForDots: {
             r: "1.5",
             strokeWidth: "1",
-            stroke: "rgba(255, 255, 255, .3)",
+            stroke: "rgba(248, 198, 28, .3)",
           },
         }}
         bezier

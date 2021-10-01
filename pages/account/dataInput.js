@@ -79,7 +79,7 @@ const DataInput = ({ navigation }) => {
   }, [date]);
 
   return (
-    <ScrollView style={tw.style("flex h-full", { backgroundColor: colors.bg1 })}>
+    <ScrollView style={tw.style("flex h-full", { backgroundColor: colors.primaryBg })}>
       <View style={tw`items-center justify-center`}>
         <Image
           source={require("../../assets/solar-panel.png")}
@@ -122,9 +122,10 @@ const DataInput = ({ navigation }) => {
           </Text>
           <TouchableOpacity onPress={() => setShow(true)}>
             <Text
-              style={tw.style("mr-2 bg-gray-600 rounded shadow px-2 py-1", {
+              style={tw.style("mr-2 rounded shadow px-2 py-1", {
                 fontFamily: fonts.semibold,
                 color: colors.text1,
+                backgroundColor: colors.secondaryBg
               })}
             >
               {moment(date).format("DD/MM/YYYY")}
@@ -146,10 +147,10 @@ const DataInput = ({ navigation }) => {
         </View>
 
         <TouchableOpacity
-          style={tw.style("px-6 bg-gray-600 py-3 mt-8 rounded shadow", {})}
+          style={tw.style("px-6 py-3 mt-8 rounded shadow", {backgroundColor: colors.accent})}
           onPress={onSubmit}
         >
-          <Text style={tw.style("text-white", { fontFamily: fonts.semibold })}>
+          <Text style={tw.style("text-black", { fontFamily: fonts.semibold })}>
             Submit
           </Text>
         </TouchableOpacity>
