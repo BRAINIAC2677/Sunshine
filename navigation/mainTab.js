@@ -8,9 +8,9 @@ import { useAuth } from '../contexts/authContext'
 import About from '../pages/about'
 import Home from '../pages/home/Home'
 import { colors } from '../styles/global'
+import AuthStackNavigator from "./authStack"
 import CalcStackNavigator from './calcStack'
 import RevCalcStackNavigator from './revCalcStack'
-import AuthStackNavigator from "./authStack"
 
 const MainTab = createBottomTabNavigator()
 
@@ -25,7 +25,10 @@ export default function MainTabContainer() {
           headerShown: false,
           //label
           showLabel: true,
+          tabBarActiveBackgroundColor: colors.bg2,
+          tabBarInactiveBackgroundColor: colors.bg1,
           tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.text2,
           //icons in bottom tab
           tabBarIcon: ({ focused }) => {
             if (route.name === 'Home') {
@@ -35,7 +38,7 @@ export default function MainTabContainer() {
                 )
               } else {
                 return (
-                  <Feather name="home" size={24} color={colors.secondary} />
+                  <Feather name="home" size={24} color={colors.text2} />
                 )
               }
             } else if (route.name === 'Visualizer') {
@@ -45,7 +48,7 @@ export default function MainTabContainer() {
                 )
               } else {
                 return (
-                  <Feather name="bar-chart-2" size={24} color={colors.secondary} />
+                  <Feather name="bar-chart-2" size={24} color={colors.text2} />
                 )
               }
             } else if (route.name === 'User') {
@@ -55,7 +58,7 @@ export default function MainTabContainer() {
                 )
               } else {
                 return (
-                  <Feather name="user" size={24} color={colors.secondary} />
+                  <Feather name="user" size={24} color={colors.text2} />
                 )
               }
             } else if (route.name === 'About') {
@@ -65,7 +68,7 @@ export default function MainTabContainer() {
                 )
               } else {
                 return (
-                  <Feather name="info" size={24} color={colors.secondary} />
+                  <Feather name="info" size={24} color={colors.text2} />
                 )
               }
             } else return <></>

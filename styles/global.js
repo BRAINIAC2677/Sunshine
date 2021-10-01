@@ -1,6 +1,14 @@
 export const colors = {
-    primary: "#4B4B87",
-    secondary: "#6C757D",
+    primary: "#F8C61C",
+    bg1: "#252729",
+    bg2: "#2B3236",
+    secondary: "#554099",
+    primaryButton: "#667FFD",
+
+    text1: "#fcfcfc",
+    text2: "#6C757D",
+    text3: "#a9bbcc",
+
     lightbg: "#FCFCFC",
     darkbg: "#161625",
     redbg: "#FFE0E6",

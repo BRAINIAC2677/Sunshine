@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { ContributionGraph, ProgressChart } from "react-native-chart-kit";
@@ -7,40 +8,57 @@ import firebase from "../../config/firebaseConfig";
 import { useAuth } from "../../contexts/authContext";
 
 const Stats = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [powerData, setPowerData] = useState(null)
+  const [selectedData, setSelectedData] = useState();
+  const [powerData, setPowerData] = useState(null);
 
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    let ans = []
+    let ans = [];
     let db = firebase.firestore();
     db.collection("powerData")
       .where("user", "==", currentUser.uid)
       .onSnapshot((snapshot) => {
-        setPowerData(snapshot.docs.map(doc => ({date: `${doc.data().date.slice(0,4)}-${doc.data().date.slice(4,6)}-${doc.data().date.slice(6,8)}`, count: doc.data().power})))
+        setPowerData(
+          snapshot.docs.map((doc) => ({
+            date: `${doc.data().date.slice(0, 4)}-${doc
+              .data()
+              .date.slice(4, 6)}-${doc.data().date.slice(6, 8)}`,
+            count: doc.data().power,
+          }))
+        );
       });
-      
   }, [currentUser]);
 
-  console.log(powerData)
+  // console.log(powerData)
 
   return (
     <View style={tw`items-center flex`}>
-      {powerData && <ContributionGraph
-        values={powerData}
-        endDate={new Date(new Date())}
-        numDays={105}
-        width={Dimensions.get("window").width}
-        height={220}
-        chartConfig={chartConfig}
-        onDayPress={(value) => {
-          setSelectedDate(value.date);
-          console.log(selectedDate);
-        }}
-      />}
+      {powerData && (
+        <ContributionGraph
+          values={powerData}
+          endDate={new Date(new Date())}
+          numDays={105}
+          width={Dimensions.get("window").width}
+          height={220}
+          chartConfig={chartConfig}
+          onDayPress={(value) => {
+            setSelectedData(value);
+          }}
+        />
+      )}
 
       <Text>Generated vs Expected Energy</Text>
+      {selectedData && (
+        <>
+          <Text>
+            Selected Date: {moment(selectedData.date).format("DD/MM/YYYY")}
+          </Text>
+          <Text>
+            Generated Energy: {selectedData.count} kW-hr
+          </Text>
+        </>
+      )}
       <ProgressChart
         data={data}
         width={Dimensions.get("window").width - 60}

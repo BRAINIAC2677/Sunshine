@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import { fonts } from "../styles/global";
+import { colors, fonts } from "../styles/global";
 
-const Chart = ({ data, labels }) => {
+const Chart = ({ data, labels, fromZero=true }) => {
   const [value, setValue] = useState(null);
   const [valuePosition, setValuePosition] = useState({x: 0, y: 0})
 
@@ -18,7 +18,7 @@ const Chart = ({ data, labels }) => {
         height={220}
         // withDots={false}
         withInnerLines={false}
-        fromZero={true}
+        fromZero={fromZero}
         yAxisLabel=""
         yAxisSuffix=""
         yAxisInterval={1} // optional, defaults to 1
@@ -30,19 +30,18 @@ const Chart = ({ data, labels }) => {
           setValuePosition({x: data.x, y: data.y})
         }}
         chartConfig={{
-          backgroundColor: "#fff",
-          backgroundGradientFrom: "#fff",
-          backgroundGradientTo: "#fff",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(75, 75, 135, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(75, 75, 135, ${opacity})`,
+          backgroundColor: colors.bg2,
+          backgroundGradientFrom: colors.bg2,
+          backgroundGradientTo: colors.bg2,
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
             borderRadius: 16,
           },
           propsForDots: {
-            r: "2",
-            strokeWidth: "0.1",
-            stroke: "rgba(75, 75, 135, .5)",
+            r: "1.5",
+            strokeWidth: "1",
+            stroke: "rgba(255, 255, 255, .3)",
           },
         }}
         bezier
@@ -55,7 +54,7 @@ const Chart = ({ data, labels }) => {
         position: 'absolute',
         top: valuePosition.y - 15,
         left: valuePosition.x - 10,
-        backgroundColor: 'white',
+        backgroundColor: colors.bg1,
         paddingHorizontal: 5,
         paddingVertical: 3,
         borderRadius: 3,
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: colors.bg2,
     paddingRight: 15,
     paddingTop: 15,
     paddingBottom: 5,
@@ -81,6 +80,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: fonts.semibold,
-    color: `rgba(75, 75, 135, .8)`,
+    color: colors.text2,
   },
 });

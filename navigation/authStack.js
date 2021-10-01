@@ -14,7 +14,7 @@ export default function AuthStackNavigator() {
     initialRouteName={"Sign Up"}
     screenOptions={{
       headerStyle: {
-        backgroundColor: colors.lightbg,
+        backgroundColor: colors.bg,
       },
       headerTintColor: colors.primary,
       headerTitleStyle: {
@@ -32,11 +32,6 @@ export default function AuthStackNavigator() {
         component={Login}
         options={{ headerTitle: (props) => <Header {...props} title="Login" /> }}
       />
-      {/* <AuthStack.Screen
-        name='ForgotPassword'
-        component={ForgotPassword}
-        options={{ headerTitle: (props) => <Header {...props} title="Reset Password" /> }}
-      /> */}
     </AuthStack.Navigator>
   )
 }

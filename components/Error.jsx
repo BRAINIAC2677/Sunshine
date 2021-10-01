@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { fonts } from "../styles/global";
+import { colors, fonts } from "../styles/global";
 
 const Error = ({ error }) => {
   return (
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     height: 220,
     width: Dimensions.get("window").width - 50,
     paddingHorizontal: 20,
-    backgroundColor: "rgba(75, 75, 135, .2)",
+    backgroundColor: colors.bg2,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 16,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: fonts.bold,
     fontSize: 20,
-    color: "rgba(75, 75, 135, 1)",
+    color: colors.text2,
     textAlign: "center",
   },
 });

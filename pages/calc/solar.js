@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import Chart from "../../components/chart";
+import DateSelector from "../../components/dateSelector";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import TimeSelector from "../../components/timeSelector";
@@ -13,7 +14,7 @@ import {
   yearlyDataFormatter
 } from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
-import { fonts } from "../../styles/global";
+import { colors, fonts } from "../../styles/global";
 
 const Solar = () => {
   const { chartLocation } = useLocation();
@@ -22,16 +23,17 @@ const Solar = () => {
   const [data, setData] = useState(null);
   const [labels, setLabels] = useState(null);
   const [parameter] = useState("ALLSKY_SFC_SW_DWN");
-  const [range, setRange] = useState({
-    start: "20210101",
-    end: "20210331",
-  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [refresh, setRefresh] = useState(0);
 
+  const [startDate, setStartDate] = useState("20210601");
+  const [endDate, setEndDate] = useState("20210901");
+
   async function loadData(url) {
     setError(null);
+    setData(null);
+    setLabels(null);
     setLoading(true);
     try {
       const rawData = await dataLoader(url, parameter);
@@ -56,30 +58,56 @@ const Solar = () => {
   }
 
   useEffect(() => {
-    if (temporal === "daily") {
-      setRange({
-        start: "20210101",
-        end: "20210331",
-      });
-    } else if (temporal === "monthly") {
-      setRange({
-        start: "2015",
-        end: "2020",
-      });
-    }
-
     let url =
       "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN&community=RE&longitude=90.3615&latitude=23.7548&start=20210101&end=20210331&format=JSON";
-    url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&start=${range.start}&end=${range.end}&format=JSON`;
+    url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&start=${startDate}&end=${endDate}&format=JSON`;
+    if (temporal === "monthly")
+      url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${
+        chartLocation.coords.longitude
+      }&latitude=${
+        chartLocation.coords.latitude
+      }&start=${2016}&end=${2020}&format=JSON`;
+
     if (temporal === "climatology")
       url = `https://power.larc.nasa.gov/api/temporal/${temporal}/point?parameters=${parameter}&community=RE&longitude=${chartLocation.coords.longitude}&latitude=${chartLocation.coords.latitude}&format=JSON`;
 
     loadData(url);
-  }, [temporal, chartLocation, refresh]);
+  }, [temporal, chartLocation, refresh, startDate, endDate]);
 
   return (
-    <View style={tw`items-center justify-center`}>
+    <View
+      style={tw.style("items-center flex h-full", {
+        backgroundColor: colors.bg1,
+      })}
+    >
       <TimeSelector temporal={temporal} setTemporal={setTemporal} />
+
+      {temporal === "daily" && (
+        <View style={tw.style("my-2")}>
+          <View style={tw`flex flex-row justify-between items-center mb-2`}>
+            <Text
+              style={tw.style("mr-2", {
+                fontFamily: fonts.regular,
+                color: colors.text3,
+              })}
+            >
+              Start Date
+            </Text>
+            <DateSelector date={startDate} setDate={setStartDate} />
+          </View>
+          <View style={tw`flex flex-row justify-between items-center mb-2`}>
+            <Text
+              style={tw.style("mr-2", {
+                fontFamily: fonts.regular,
+                color: colors.text3,
+              })}
+            >
+              End Date
+            </Text>
+            <DateSelector date={endDate} setDate={setEndDate} />
+          </View>
+        </View>
+      )}
 
       <Text style={styles.title}>SOLAR POWER</Text>
 
@@ -94,13 +122,26 @@ const Solar = () => {
         )
       )}
 
+      {/* summary */}
+      <View style={tw`mx-6 mt-3`}>
+        <Text
+          style={tw.style("", { fontFamily: fonts.regular, color: colors.text3, fontSize: 15, })}
+        >
+          {temporal==="daily" && dailyText}
+          {temporal==="monthly" && monthlyText}
+          {temporal==="climatology" && yearlyText}
+        </Text>
+      </View>
+
       <TouchableOpacity
-        style={tw`bg-gray-300 mt-8 w-32 justify-center items-center h-12 rounded-lg shadow`}
+        style={tw`bg-gray-600 mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`}
         onPress={() => setRefresh(refresh + 1)}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <AntDesign name="reload1" size={16} color="black" />
-          <Text style={styles.buttonText}>Reload</Text>
+          <AntDesign name="reload1" size={16} color={colors.text1} />
+          <Text style={[styles.buttonText, { color: colors.text1 }]}>
+            Reload
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -111,12 +152,18 @@ export default Solar;
 
 const styles = StyleSheet.create({
   title: {
-    marginVertical: 10,
+    color: colors.text1,
+    marginVertical: 12,
     fontFamily: fonts.semibold,
-    fontSize: 16
+    fontSize: 16,
   },
   buttonText: {
     marginLeft: 12,
     fontFamily: fonts.semibold,
   },
 });
+
+
+const dailyText = "Daily Solar irradiance (kW-hr/m2/day) gives an idea about how much solar energy you can generate in your locality. You can interact real time with data from NASA API by changing location and time range. If an error is generated make sure the time range is valid and try again by reloading."
+const monthlyText = "Monthly solar irradiance (kW-hr/m2/day) gives an idea about last 5 years monthly data. You can take descition about your solar energy from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading."
+const yearlyText = "This dataset (kW-hr/m2/day) is generated according to the climatological solar irradiance from 1983. It shows a clear picture about solar power in the basis of long term. This data is fetched from NASA and based on your selected location If an error is generated make sure the time range is valid and try again by reloading."

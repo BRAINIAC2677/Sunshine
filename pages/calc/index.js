@@ -9,7 +9,8 @@ import {
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
-import { fonts } from "../../styles/global";
+import Location from "../../components/location";
+import { colors, fonts } from "../../styles/global";
 
 export default function Calc({ navigation }) {
   const renderCard = (item) => (
@@ -48,6 +49,19 @@ export default function Calc({ navigation }) {
           alignItems: "center",
         }}
       >
+        
+        <Location />
+        
+        <TouchableOpacity
+          style={tw`bg-gray-600 my-8 w-48 justify-center items-center h-12 rounded-lg shadow`}
+          onPress={() => navigation.navigate("Map")}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Feather name="map" size={16} color={colors.text1} />
+            <Text style={styles.buttonText}>Change Location</Text>
+          </View>
+        </TouchableOpacity>
+        
         <FlatList
           data={data}
           renderItem={({ item }) => renderCard(item)}
@@ -57,16 +71,6 @@ export default function Calc({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
-
-        <TouchableOpacity
-          style={tw`bg-gray-300 mt-8 w-48 justify-center items-center h-12 rounded-lg shadow`}
-          onPress={() => navigation.navigate("Map")}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Feather name="map" size={16} color="black" />
-            <Text style={styles.buttonText}>Change Location</Text>
-          </View>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -77,12 +81,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginTop: 50,
+    paddingTop: 68,
+    backgroundColor: colors.bg1,
   },
   heading: {
     marginBottom: 20,
     fontFamily: fonts.bold,
     fontSize: 24,
+    color: colors.text1,
   },
   card: {
     width: 150,
@@ -108,6 +114,7 @@ const styles = StyleSheet.create({
   buttonText: {
     marginLeft: 12,
     fontFamily: fonts.semibold,
+    color: colors.text1,
   },
 });
 

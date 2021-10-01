@@ -18,7 +18,7 @@ export default function CalcStackNavigator() {
       initialRouteName={"Home"}
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.lightbg,
+          backgroundColor: colors.bg2,
         },
         headerTintColor: colors.primary,
         headerTitleStyle: {
@@ -29,7 +29,8 @@ export default function CalcStackNavigator() {
       <CalcStack.Screen
         name="Calc"
         component={Calc}
-        options={{ headerTitle: (props) => <Header {...props} title="Visualizer" /> }}
+        screenOptions={{headerShown: false,}}
+        options={{headerShown: false}}
       />
       <CalcStack.Screen
         name="Map"

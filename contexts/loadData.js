@@ -10,7 +10,7 @@ export const dailyDataFormatter = (rawData, labelCount = 5) => {
   let allLabels = [];
 
   for (const key in rawData) {
-    values.push(rawData[key]);
+    if (rawData[key] > 0) values.push(rawData[key]);
 
     const year = key.slice(0, 4);
     const month = key.slice(4, 6);
