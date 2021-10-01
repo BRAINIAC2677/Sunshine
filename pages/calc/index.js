@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
@@ -18,60 +18,68 @@ export default function Calc({ navigation }) {
       onPress={() =>
         navigation.navigate(item.screen, { parameter: item.parameter })
       }
-      style={tw.style("shadow-md p-4", {
-        backgroundColor: item.bgColor,
+      style={tw.style("shadow-lg p-4", {
+        backgroundColor: colors.secondaryBg,
         ...styles.card,
       })}
     >
       <View
         style={{
-          backgroundColor: item.secColor,
+          backgroundColor: colors.accent,
           ...styles.iconBg,
         }}
       >
         {item.icon !== "water-outline" ? (
-          <Feather name={item.icon} size={24} color="white" />
+          <Feather name={item.icon} size={24} color="black" />
         ) : (
-          <Ionicons name={item.icon} size={24} color="white" />
+          <Ionicons name={item.icon} size={24} color="black" />
         )}
       </View>
-      <Text style={styles.titleText}>{item.title}</Text>
+      <Text style={tw.style("text-white text-xl font-bold")}>{item.title}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Visualize Data</Text>
-
-      <ScrollView
-        contentContainerStyle={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+    <View
+      style={tw.style("justify-around items-center", {
+        flex: 1,
+        backgroundColor: colors.primaryBg,
+      })}
+    >
+      <Text
+        style={tw.style("mt-20 mb-8 tracking-wide text-4xl text-center", {
+          color: colors.accent,
+        })}
       >
-        
-        <Location />
-        
-        <TouchableOpacity
-          style={tw`bg-gray-600 my-8 w-48 justify-center items-center h-12 rounded-lg shadow`}
-          onPress={() => navigation.navigate("Map")}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Feather name="map" size={16} color={colors.text1} />
-            <Text style={styles.buttonText}>Change Location</Text>
-          </View>
-        </TouchableOpacity>
-        
-        <FlatList
-          data={data}
-          renderItem={({ item }) => renderCard(item)}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ alignSelf: "flex-start" }}
-          numColumns={Math.ceil(data.length / 2)}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
-      </ScrollView>
+        Solar Visualizer
+      </Text>
+
+      <Location />
+
+      <TouchableOpacity
+        style={tw.style(
+          "mt-16 mb-8 w-48 justify-center items-center h-12 rounded-lg shadow-lg",
+          { backgroundColor: colors.secondaryBg }
+        )}
+        onPress={() => navigation.navigate("Map")}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Feather name="map" size={16} color={colors.accent} />
+          <Text style={tw.style("ml-4 text-white text-lg font-bold")}>
+            Change Location
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      <FlatList
+        data={data}
+        renderItem={({ item }) => renderCard(item)}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ alignSelf: "flex-start" }}
+        numColumns={Math.ceil(data.length / 2)}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 }
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     paddingTop: 68,
-    backgroundColor: colors.bg1,
+    backgroundColor: colors.primaryBg,
   },
   heading: {
     marginBottom: 20,
