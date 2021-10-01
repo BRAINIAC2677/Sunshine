@@ -12,6 +12,7 @@ export default function RevCalc({ navigation }) {
  
   const renderCard = (item) => (
     <TouchableOpacity
+      key={item.id}
       onPress={() =>
         navigation.navigate(item.screen)
       }

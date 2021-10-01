@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { ContributionGraph, ProgressChart } from "react-native-chart-kit";
 import { useState } from "react/cjs/react.development";
 import tw from "tailwind-react-native-classnames";
+import firebase from "../../config/firebaseConfig";
+import { useAuth } from "../../contexts/authContext";
 
 const Stats = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [powerData, setPowerData] = useState(null)
 
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    let ans = []
+    let db = firebase.firestore();
+    db.collection("powerData")
+      .where("user", "==", currentUser.uid)
+      .onSnapshot((snapshot) => {
+        setPowerData(snapshot.docs.map(doc => ({date: `${doc.data().date.slice(0,4)}-${doc.data().date.slice(4,6)}-${doc.data().date.slice(6,8)}`, count: doc.data().power})))
+      });
+      
+  }, [currentUser]);
+
+  console.log(powerData)
 
   return (
     <View style={tw`items-center flex`}>
-      <ContributionGraph
-        values={commitsData}
+      {powerData && <ContributionGraph
+        values={powerData}
         endDate={new Date(new Date())}
         numDays={105}
         width={Dimensions.get("window").width}
@@ -19,14 +36,14 @@ const Stats = () => {
         chartConfig={chartConfig}
         onDayPress={(value) => {
           setSelectedDate(value.date);
-          console.log(selectedDate)
+          console.log(selectedDate);
         }}
-      />
+      />}
 
       <Text>Generated vs Expected Energy</Text>
       <ProgressChart
         data={data}
-        width={Dimensions.get("window").width-60}
+        width={Dimensions.get("window").width - 60}
         height={220}
         strokeWidth={12}
         radius={24}
@@ -42,8 +59,8 @@ export default Stats;
 
 const data = {
   labels: ["Output", "Expected"], // optional
-  data: [0.4, 0.6]
-}
+  data: [0.4, 0.6],
+};
 
 const commitsData = [
   { date: "2021-06-02", count: 1 },
@@ -64,7 +81,7 @@ const chartConfig = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "transparent",
   backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => `rgba(26, 26, 26, ${opacity})`,
+  color: (opacity = 1) => `rgba(26, 26, 26, ${opacity || 1})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional

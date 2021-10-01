@@ -14,13 +14,14 @@ import firebase from "../../config/firebaseConfig";
 import { useAuth } from "../../contexts/authContext";
 import { colors, fonts } from "../../styles/global";
 
-const DataInput = () => {
-  const [power, setPower] = useState()
+const DataInput = ({ navigation }) => {
+  const [power, setPower] = useState();
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
+  const [found, setFound] = useState(null);
 
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -29,17 +30,51 @@ const DataInput = () => {
   };
 
   const onSubmit = () => {
-    let db = firebase.firestore()
+    setError();
 
-    db.collection("users").doc(currentUser.uid)
-      .onSnapshot(snapshot => {
-        console.log(snapshot.data())
-      })
-  }
+    if (isNaN(power) || power < 0) {
+      setError("Power should be a numeric value");
+      return;
+    }
+
+    let db = firebase.firestore();
+
+    if (found) {
+      db.collection("powerData")
+        .doc(found)
+        .set({
+          user: currentUser.uid,
+          date: moment(date).format("YYYYMMDD"),
+          power: power,
+        })
+        .then(navigation.goBack())
+        .catch((e) => setError(e));
+    } else {
+      db.collection("powerData");
+      db.collection("powerData")
+        .add({
+          user: currentUser.uid,
+          date: moment(date).format("YYYYMMDD"),
+          power: power,
+        })
+        .then(navigation.goBack())
+        .catch((e) => setError(e));
+    }
+  };
 
   useEffect(() => {
-
-  }, [date])
+    setFound(null)
+    let db = firebase.firestore();
+    db.collection("powerData")
+      .where("user", "==", currentUser.uid)
+      .where("date", "==", moment(date).format("YYYYMMDD"))
+      .onSnapshot((snapshot) => {
+        snapshot?.forEach((doc) => {
+          setFound(doc.id);
+          setPower(doc.data().power);
+        });
+      });
+  }, [date]);
 
   return (
     <View>
@@ -59,12 +94,28 @@ const DataInput = () => {
           icon="ios-sunny-outline"
         />
 
-        {error && <Text style={tw.style("text-red-400 my-2 mr-auto px-10", {fontFamily: fonts.semibold})}>{error}</Text>}
+        {error && (
+          <Text
+            style={tw.style("text-red-400 my-2 mr-auto px-10", {
+              fontFamily: fonts.semibold,
+            })}
+          >
+            {error}
+          </Text>
+        )}
 
         <View style={tw`flex-row items-center mt-6 mr-auto px-10`}>
-          <Text style={tw.style("mr-2", {fontFamily: fonts.regular})}>Select Date:</Text>
+          <Text style={tw.style("mr-2", { fontFamily: fonts.regular })}>
+            Select Date:
+          </Text>
           <TouchableOpacity onPress={() => setShow(true)}>
-            <Text style={tw.style("mr-2 bg-white rounded shadow px-4 py-2", {fontFamily: fonts.semibold})}>{moment(date).format("DD/MM/YYYY")}</Text>
+            <Text
+              style={tw.style("mr-2 bg-white rounded shadow px-4 py-2", {
+                fontFamily: fonts.semibold,
+              })}
+            >
+              {moment(date).format("DD/MM/YYYY")}
+            </Text>
           </TouchableOpacity>
         </View>
 
