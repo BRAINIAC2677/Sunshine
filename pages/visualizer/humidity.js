@@ -11,7 +11,7 @@ import {
   dailyDataFormatter,
   dataLoader,
   monthlyDataFormatter,
-  yearlyDataFormatter
+  yearlyDataFormatter,
 } from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
 import { colors, fonts } from "../../styles/global";
@@ -118,18 +118,27 @@ const Humidity = () => {
       ) : (
         data &&
         labels && (
-          <Chart data={data} labels={labels} fromZero={false} title={"Daily Humidity Flow"} />
+          <Chart
+            data={data}
+            labels={labels}
+            fromZero={false}
+            title={"Daily Humidity Flow"}
+          />
         )
       )}
 
       {/* summary */}
       <View style={tw`mx-6 mt-3`}>
         <Text
-          style={tw.style("", { fontFamily: fonts.regular, color: colors.text3, fontSize: 15, })}
+          style={tw.style("", {
+            fontFamily: fonts.regular,
+            color: colors.text3,
+            fontSize: 15,
+          })}
         >
-          {temporal==="daily" && dailyText}
-          {temporal==="monthly" && monthlyText}
-          {temporal==="climatology" && yearlyText}
+          {temporal === "daily" && dailyText}
+          {temporal === "monthly" && monthlyText}
+          {temporal === "climatology" && yearlyText}
         </Text>
       </View>
 
@@ -163,7 +172,9 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const dailyText = "Daily relative humidity (% in 2 meter) gives an idea about the variation of relative humidity in daily basis in your locality. Humidity affects the generation of solar enery. You can interact real time with data from NASA API by changing location and time range."
-const monthlyText = "Monthly humidity (% in 2 meter) gives an idea about last 5 years monthly data. You can take descition about your solar energy and humidity from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading."
-const yearlyText = "This dataset (% in 2 meter) is generated according to the climatological relative humidity from 1990. It shows a clear picture about Humidity flow in the basis of long term. This data is fetched from NASA and based on your selected location If an error is generated make sure the time range is valid and try again by reloading."
+const dailyText =
+  "Daily relative humidity (% in 2 meter) gives an idea about the variation of relative humidity in daily basis in your locality. Humidity affects the generation of solar energy. You can interact real time with data from NASA API by changing location and time range.";
+const monthlyText =
+  "Monthly humidity (% in 2 meter) gives an idea about last 5 years monthly data. You can take decision about your solar energy and humidity from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading.";
+const yearlyText =
+  "This dataset (% in 2 meter) is generated according to the climatological relative humidity from 1990. It shows a clear picture about Humidity in the basis of long term. This data is fetched from NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading.";
