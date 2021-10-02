@@ -11,7 +11,7 @@ import {
   dailyDataFormatter,
   dataLoader,
   monthlyDataFormatter,
-  yearlyDataFormatter
+  yearlyDataFormatter,
 } from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
 import { colors, fonts } from "../../styles/global";
@@ -125,16 +125,23 @@ const Solar = () => {
       {/* summary */}
       <View style={tw`mx-6 mt-3`}>
         <Text
-          style={tw.style("", { fontFamily: fonts.regular, color: colors.text3, fontSize: 15, })}
+          style={tw.style("", {
+            fontFamily: fonts.regular,
+            color: colors.text3,
+            fontSize: 15,
+          })}
         >
-          {temporal==="daily" && dailyText}
-          {temporal==="monthly" && monthlyText}
-          {temporal==="climatology" && yearlyText}
+          {temporal === "daily" && dailyText}
+          {temporal === "monthly" && monthlyText}
+          {temporal === "climatology" && yearlyText}
         </Text>
       </View>
 
       <TouchableOpacity
-        style={tw.style(`mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`, {backgroundColor: colors.secondaryBg})}
+        style={tw.style(
+          `mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`,
+          { backgroundColor: colors.secondaryBg }
+        )}
         onPress={() => setRefresh(refresh + 1)}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -163,7 +170,9 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const dailyText = "Daily Solar irradiance (kW-hr/m2/day) gives an idea about how much solar energy you can generate in your locality. You can interact real time with data from NASA API by changing location and time range."
-const monthlyText = "Monthly solar irradiance (kW-hr/m2/day) gives an idea about last 5 years monthly data. You can take descition about your solar energy from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading."
-const yearlyText = "This dataset (kW-hr/m2/day) is generated according to the climatological solar irradiance from 1990. It shows a clear picture about solar power in the basis of long term. This data is fetched from NASA and based on your selected location If an error is generated make sure the time range is valid and try again by reloading."
+const dailyText =
+  "Daily Solar irradiance (kW-hr/m2/day) gives an idea about how much solar energy you can generate in your locality. You can interact real time with data from NASA API by changing location and time range.";
+const monthlyText =
+  "Monthly solar irradiance (kW-hr/m2/day) gives an idea about last 5 years monthly data. You can take decision about your solar energy from previous data. This data is powered by NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading.";
+const yearlyText =
+  "This dataset (kW-hr/m2/day) is generated according to the climatological solar irradiance from 1990. It shows a clear picture about solar power in the basis of long term. This data is fetched from NASA and based on your selected location. If an error is generated make sure the time range is valid and try again by reloading.";

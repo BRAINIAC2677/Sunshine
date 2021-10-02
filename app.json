@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "solar-stat",
-    "slug": "solar-stat",
+    "name": "Sunshine",
+    "slug": "sunshine",
     "version": "1.0.0",
+    "description": "Sunshine is an android/ios app to encourage solar energy among mass people",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
