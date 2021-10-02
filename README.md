@@ -2,6 +2,8 @@
 
 # Project Overview
 
+<div style="text-align:center"><img src="./assets/logo.png" width=200 /></div>
+<br/>
 Sunshine app will help to empower and encourage solar energy among mass people and assist to keep track of the system of the installed solar system.
 
 # Features
