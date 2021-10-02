@@ -2,7 +2,7 @@
 
 # Project Overview
 
-<div style="text-align:center"><img src="./assets/logo.png" width=200 /></div>
+<div style="text-align:center"><img src="https://firebasestorage.googleapis.com/v0/b/solar-stat-8373e.appspot.com/o/cover.jpg?alt=media&token=389efd16-55be-4568-b020-8969eb6110f2" alt="Sunshine" /></div>
 <br/>
 Sunshine app will help to empower and encourage solar energy among mass people and assist to keep track of the system of the installed solar system.
 
@@ -69,7 +69,7 @@ When the user is saving his/her power generation data of a particular day, the a
 - Input the monthly power consumption in kw-hr of your residence and wattage of solar panel you are planning to use.
 - Hit the calculate button to see the suggestiong about the number of solar panel for your setup and the amount of power they will support.
 
-### _*Run Application on IOS or Andreoid*
+### _*Run Application on IOS or Andreoid*_
 
 [Run application from Expo Go](https://expo.dev/@brainiac77/sunshine)
 <br />
