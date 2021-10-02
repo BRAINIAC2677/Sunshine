@@ -41,6 +41,9 @@ When the user is saving his/her power generation data of a particular day, the a
 
 ### _*Visualizer*_
 
+<div style="text-align:center"><img src="https://firebasestorage.googleapis.com/v0/b/solar-stat-8373e.appspot.com/o/visualizer%20demo.gif?alt=media&token=db1236a4-058f-41bd-bd21-5b74f8550e95" width=800 /></div>
+<br/>
+
 - Changing the current location from the map.[default location is set to the user's location]
 - Choose the parameters(solar irradiance, temperature, humidity, temperature) to visualize.
 
@@ -51,11 +54,23 @@ When the user is saving his/her power generation data of a particular day, the a
 
 ### _*User Account*_
 
+<div style="text-align:center"><img src="https://firebasestorage.googleapis.com/v0/b/solar-stat-8373e.appspot.com/o/visualizer%20demo.gif?alt=media&token=db1236a4-058f-41bd-bd21-5b74f8550e95" width=800 /></div>
+<br/>
+
 - Sign up if you don't have an account otherwise login to your account.
 - Input the power generation data of your solar panel system by clicking _*Input Daily Data*_.
 - Check the comparison of your inputted data against the sunlight reaching your location.
 
 ### _*Solar Calculator*_
 
+<div style="text-align:center"><img src="https://firebasestorage.googleapis.com/v0/b/solar-stat-8373e.appspot.com/o/Screenrecorder-2021-10-02-20-18-25-124.gif?alt=media&token=9aa1450e-fa3b-4734-87c6-88daf7a9828c" width=800 /></div>
+<br/>
+
 - Input the monthly power consumption in kw-hr of your residence and wattage of solar panel you are planning to use.
 - Hit the calculate button to see the suggestiong about the number of solar panel for your setup and the amount of power they will support.
+
+### _*Run Application on IOS or Andreoid*
+
+[Run application from Expo Go](https://expo.dev/@brainiac77/sunshine)
+[Download in apk format](https://drive.google.com/file/d/1JCTGwOJ1xZDllB3X_cGRACW0YZAIp8g8/view?usp=sharing)
+
