@@ -81,7 +81,7 @@ export default function About() {
           baseColor="white"
           tintColor={colors.accent}
           fontSize={20}
-          labelFontSize={15}
+          labelFontSize={10}
           lineWidth={2}
           ref={refConsumption}
         ></TextField>
@@ -97,7 +97,7 @@ export default function About() {
           baseColor="white"
           tintColor={colors.accent}
           fontSize={20}
-          labelFontSize={15}
+          labelFontSize={10}
           lineWidth={2}
           ref={refWattage}
         ></TextField>
@@ -126,9 +126,11 @@ export default function About() {
             height={220}
             chartConfig={chartConfig}
             yAxisSuffix=" Panels "
-            horizontalLabelRotation={30}
+            yLabelsOffset={-10}
+            horizontalLabelRotation={0}
             fromZero={true}
             showValuesOnTopOfBars={true}
+            withInnerLines={false}
             style={tw.style("self-center", { borderRadius: 10 })}
           />
           <Text
