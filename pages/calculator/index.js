@@ -18,7 +18,7 @@ export default function About() {
 
   const [consumption, setConsumption] = useState(null);
   const [wattage, setWattage] = useState(null);
-  const [peakHours, setPeakHours] = useState(1);
+  const [peakHours, setPeakHours] = useState(5);
   const [noOfPanels, setNoOfPanels] = useState(0);
   const [showChart, setShowChart] = useState(false);
 
