@@ -11,7 +11,7 @@ import {
   dailyDataFormatter,
   dataLoader,
   monthlyDataFormatter,
-  yearlyDataFormatter,
+  yearlyDataFormatter
 } from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
 import { colors, fonts } from "../../styles/global";

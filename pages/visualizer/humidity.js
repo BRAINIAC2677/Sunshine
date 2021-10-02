@@ -11,7 +11,7 @@ import {
   dailyDataFormatter,
   dataLoader,
   monthlyDataFormatter,
-  yearlyDataFormatter,
+  yearlyDataFormatter
 } from "../../contexts/loadData";
 import { useLocation } from "../../contexts/locationContext";
 import { colors, fonts } from "../../styles/global";
@@ -143,11 +143,14 @@ const Humidity = () => {
       </View>
 
       <TouchableOpacity
-        style={tw`bg-gray-600 mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`}
+        style={tw.style(
+          `mt-8 w-32 justify-center items-center h-10 rounded-lg shadow`,
+          { backgroundColor: colors.secondaryBg }
+        )}
         onPress={() => setRefresh(refresh + 1)}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <AntDesign name="reload1" size={16} color={colors.text1} />
+          <AntDesign name="reload1" size={16} color={colors.accent} />
           <Text style={[styles.buttonText, { color: colors.text1 }]}>
             Reload
           </Text>
