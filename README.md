@@ -69,7 +69,7 @@ When the user is saving his/her power generation data of a particular day, the a
 - Input the monthly power consumption in kw-hr of your residence and wattage of solar panel you are planning to use.
 - Hit the calculate button to see the suggestiong about the number of solar panel for your setup and the amount of power they will support.
 
-### _*Run Application on IOS or Andreoid*_
+### _*Run Application on IOS or Android*_
 
 [Run application from Expo Go](https://expo.dev/@brainiac77/sunshine)
 <br />
